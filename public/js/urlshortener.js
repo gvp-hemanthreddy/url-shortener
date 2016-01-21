@@ -6,11 +6,11 @@ $(function() {
 			type: "POST",
 			dataType: "json",
 			data: {
-				long_url: inputURL
+				longURL: inputURL
 			},
 			url: "/api/v1/shorten",
 			success: function(data) {
-				$("#shortURL").text(data.long_url);
+				$("#shortURL").text(data.shortURL);
 			}
 		});
 
