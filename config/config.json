@@ -1,8 +1,8 @@
 {
 	"port": 3000,
+	"hostname": "localhost",
 	"db": {
 		"name": "urlshortener",
-		"host": "localhost",
 		"user": "root",
 		"password": "qqQQ11!!"
 	},

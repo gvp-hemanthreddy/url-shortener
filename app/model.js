@@ -15,7 +15,7 @@ var mysql = require('mysql'),
 	connection;
 
 connection = mysql.createConnection({
-	host: config.db.host,
+	host: config.hostname,
 	user: config.db.user,
 	password: config.db.password
 });

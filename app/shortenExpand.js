@@ -3,6 +3,11 @@ var sqlModel = require('./model.js'),
 	possibleCharacters = config.possibleCharacters,
 	BASE = possibleCharacters.length;
 
+var isValidURL = function(url) {
+	var regexp = /^(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
+	return regexp.test(url);
+};
+
 var encode = function(rowId) {
 	var list = [];
 
@@ -29,14 +34,18 @@ var decode = function(shortURL) {
 };
 
 var shorten = function(longURL, callback) {
-	sqlModel.insertRow(longURL, function(rowId) {
-		callback(encode(rowId));
-	});
+	if (isValidURL(longURL)) {
+		sqlModel.insertRow(longURL, function(rowId) {
+			callback(null, encode(rowId));
+		});
+	} else {
+		callback(300);
+	}
 };
 
 var expand = function(shortURL, callback) {
 	sqlModel.selectRow(decode(shortURL), function(data) {
-		callback(data);
+		callback(null, data);
 	});
 };
 

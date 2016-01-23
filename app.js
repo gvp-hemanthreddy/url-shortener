@@ -17,35 +17,59 @@ app.get('/', function(req, res) {
 });
 
 app.post('/api/v1/shorten', function(req, res) {
-	shortenExpand.shorten(req.body.longURL, function(shortURL) {
-		res.send({
-			"shortURL": shortURL
-		});
+	shortenExpand.shorten(req.body.longURL, function(err, shortURL) {
+		if (err) {
+			sendResponse(res, err);
+		} else if (shortURL) {
+			sendResponse(res, 200, {
+				"shortURL": shortURL
+			});
+		} else {
+			sendResponse(res, 500);
+		}
 	});
 });
 
-/*
 app.get('/api/v1/expand', function(req, res) {
-	shortenExpand.shorten(req.body.shortURL, function(longURL) {
-		res.send({
-			"longURL": longURL
-		});
+	shortenExpand.expand(req.body.shortURL, function(data) {
+		if (data.length === 1) {
+			res.redirect(301, data[0].long_url);
+		} else {
+			sendResponse(res, 404);
+		}
 	});
 });
-*/
 
 app.get(/^\/([\w=]+)$/, function(req, res) {
 	shortenExpand.expand(req.params[0], function(data) {
 		if (data.length === 1) {
 			res.redirect(301, data[0].long_url);
 		} else {
-			res.send({
-				'error': '404 error occured.'
-			});
+			sendResponse(res, 404);
 		}
 	});
 });
 
 app.listen(config.port, function() {
-	console.log('Node server listening on port ' + config.port);
+	console.log('Node server is listening on port ' + config.port);
 });
+
+var sendResponse = function(res, statusCode, data) {
+	var status_codes = {
+		200: 'OK',
+		300: 'Incorrect Link',
+		400: 'Bad Request',
+		404: 'Not Found',
+		500: 'Internal Server Error',
+		503: 'Unknown Server Error'
+	};
+
+	res.type('application/json');
+
+	data = data || {};
+
+	data.status_code = (status_codes[statusCode]) ? statusCode : 503;
+	data.status_txt = status_codes[statusCode] || status_codes[503];
+
+	res.send(data);
+};
