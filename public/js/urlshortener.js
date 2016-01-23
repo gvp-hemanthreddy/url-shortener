@@ -1,6 +1,6 @@
 $(function() {
 	$("#submitBtn").click(function() {
-		var inputURL = $("#longURL").val();
+		var inputURL = $("#inputURL").val();
 
 		$.ajax({
 			type: "POST",
@@ -10,7 +10,11 @@ $(function() {
 			},
 			url: "/api/v1/shorten",
 			success: function(data) {
-				$("#shortURL").text(data.shortURL);
+				if (data.status_code === 200) {
+					$("#inputURL").val(data.shortURL).select();
+				} else if (data.status_code === 300) {
+					alert("Invalid URL.");
+				}
 			}
 		});
 

@@ -1,21 +1,32 @@
 <!doctype html>
 <html>
-	<head>
-		<!-- CSS -->
-		<link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.min.css">
 
-		<!-- JS -->
-		<script src="lib/jquery/dist/jquery.min.js"></script>
-		<script src="lib/bootstrap/dist/js/bootstrap.min.js"></script>
+<head>
+  <!-- CSS -->
+  <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.min.css">
 
-		<!-- CUSTOM JS -->
-		<script src="js/urlshortener.js"></script>
-	</head>
-	<body>
-		<div class="container">
-			<input id="longURL" type="text" placeholder="Enter URL">
-			<button id="submitBtn" class="btn btn-default">Short</button>
-			<label id="shortURL"></label>
-		</div>
-	</body>
+  <!-- CUSTOM CSS -->
+  <link rel="stylesheet" href="css/styles.css">
+
+  <!-- JS -->
+  <script src="lib/jquery/dist/jquery.min.js"></script>
+  <script src="lib/bootstrap/dist/js/bootstrap.min.js"></script>
+
+  <!-- CUSTOM JS -->
+  <script src="js/urlshortener.js"></script>
+</head>
+
+<body>
+  <div class="container">
+    <div class="row centered">
+      <div class="input-group col-lg-6">
+        <input type="text" id="inputURL" class="form-control" placeholder="Paste a link to shorten it." aria-describedby="basic-addon1">
+        <span class="input-group-btn">
+          <button id="submitBtn" class="btn btn-default" type="button">Shorten</button>
+        </span>
+      </div>
+    </div>
+  </div>
+</body>
+
 </html>

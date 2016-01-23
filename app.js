@@ -21,8 +21,9 @@ app.post('/api/v1/shorten', function(req, res) {
 		if (err) {
 			sendResponse(res, err);
 		} else if (shortURL) {
+			var hostURL = config.hostname + ':' + config.port + '/';
 			sendResponse(res, 200, {
-				"shortURL": shortURL
+				"shortURL": hostURL + shortURL
 			});
 		} else {
 			sendResponse(res, 500);
@@ -31,7 +32,7 @@ app.post('/api/v1/shorten', function(req, res) {
 });
 
 app.get('/api/v1/expand', function(req, res) {
-	shortenExpand.expand(req.body.shortURL, function(data) {
+	shortenExpand.expand(req.body.shortURL, function(err, data) {
 		if (data.length === 1) {
 			res.redirect(301, data[0].long_url);
 		} else {
@@ -41,7 +42,7 @@ app.get('/api/v1/expand', function(req, res) {
 });
 
 app.get(/^\/([\w=]+)$/, function(req, res) {
-	shortenExpand.expand(req.params[0], function(data) {
+	shortenExpand.expand(req.params[0], function(err, data) {
 		if (data && data.length === 1) {
 			res.redirect(301, data[0].long_url);
 		} else {
