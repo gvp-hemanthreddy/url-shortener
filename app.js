@@ -35,7 +35,7 @@ app.get('/api/v1/expand', function(req, res) {
 		if (data.length === 1) {
 			res.redirect(301, data[0].long_url);
 		} else {
-			sendResponse(res, 404);
+			res.status(404).send('Sorry, we cannot find that!');
 		}
 	});
 });
@@ -45,14 +45,14 @@ app.get(/^\/([\w=]+)$/, function(req, res) {
 		if (data && data.length === 1) {
 			res.redirect(301, data[0].long_url);
 		} else {
-			sendResponse(res, 404);
+			res.status(404).send('Sorry, we cannot find that!');
 		}
 	});
 });
 
 // catch 404.
 app.use(function(req, res, next) {
-	sendResponse(res, 404);
+	res.status(404).send('Sorry, we cannot find that!');
 });
 
 app.listen(config.port, function() {
