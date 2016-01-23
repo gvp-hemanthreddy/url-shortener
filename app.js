@@ -42,12 +42,17 @@ app.get('/api/v1/expand', function(req, res) {
 
 app.get(/^\/([\w=]+)$/, function(req, res) {
 	shortenExpand.expand(req.params[0], function(data) {
-		if (data.length === 1) {
+		if (data && data.length === 1) {
 			res.redirect(301, data[0].long_url);
 		} else {
 			sendResponse(res, 404);
 		}
 	});
+});
+
+// catch 404.
+app.use(function(req, res, next) {
+	sendResponse(res, 404);
 });
 
 app.listen(config.port, function() {
