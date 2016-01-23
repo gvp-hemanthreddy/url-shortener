@@ -1,5 +1,6 @@
 var mysql = require('mysql'),
-	databaseName = 'urlshortener',
+	config = require('../config/config.json'),
+	databaseName = config.db.name,
 	CREATE_DATABASE = 'CREATE DATABASE IF NOT EXISTS ' + databaseName,
 	SELECT_DATABASE = 'USE ' + databaseName,
 	CREATE_URLS_TABLE = [
@@ -14,9 +15,9 @@ var mysql = require('mysql'),
 	connection;
 
 connection = mysql.createConnection({
-	host: 'localhost',
-	user: 'root',
-	password: ''
+	host: config.db.host,
+	user: config.db.user,
+	password: config.db.password
 });
 
 connection.connect(function(err) {

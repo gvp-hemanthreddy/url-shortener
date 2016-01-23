@@ -1,12 +1,14 @@
-var sqlModel = require('./model.js');
-var possibleCharacters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+var sqlModel = require('./model.js'),
+	config = require('../config/config.json'),
+	possibleCharacters = config.possibleCharacters,
+	BASE = possibleCharacters.length;
 
 var encode = function(rowId) {
 	var list = [];
 
 	while (rowId > 0) {
-		list.push(possibleCharacters[rowId % 62]);
-		rowId = Math.floor(rowId / 62);
+		list.push(possibleCharacters[rowId % BASE]);
+		rowId = Math.floor(rowId / BASE);
 	}
 
 	return list.join('');
@@ -20,7 +22,7 @@ var decode = function(shortURL) {
 
 	for (; i < l; ++i) {
 		rowId += (possibleCharacters.indexOf(shortURL[i]) * mult);
-		mult *= 62;
+		mult *= BASE;
 	}
 
 	return rowId;

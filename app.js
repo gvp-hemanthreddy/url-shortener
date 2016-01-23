@@ -1,8 +1,9 @@
-var express = require('express');
-var bodyParser = require('body-parser');
-var path = require('path');
-var app = express();
-var shortenExpand = require('./app/shortenExpand');
+var express = require('express'),
+	bodyParser = require('body-parser'),
+	path = require('path'),
+	app = express(),
+	shortenExpand = require('./app/shortenExpand'),
+	config = require('./config/config.json');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -45,6 +46,6 @@ app.get(/^\/([\w=]+)$/, function(req, res) {
 	});
 });
 
-app.listen(3000, function() {
-	console.log('Listening on port 3000');
+app.listen(config.port, function() {
+	console.log('Node server listening on port ' + config.port);
 });

@@ -1,0 +1,10 @@
+{
+	"port": 3000,
+	"db": {
+		"name": "urlshortener",
+		"host": "localhost",
+		"user": "root",
+		"password": "qqQQ11!!"
+	},
+	"possibleCharacters": "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+}
